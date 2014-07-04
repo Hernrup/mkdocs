@@ -1,4 +1,5 @@
 # coding: utf-8
+from __future__ import print_function
 
 from watchdog import events, observers
 from mkdocs.build import build
@@ -25,10 +26,10 @@ class BuildEventHandler(events.FileSystemEventHandler):
     def on_any_event(self, event):
         if not isinstance(event, events.DirModifiedEvent):
             time.sleep(0.05)
-            print 'Rebuilding documentation...',
-            config = load_config(options=self.options)
+            print('Rebuilding documentation...')
+            config = load_config(options=self.options, end=' ')
             build(config, live_server=True)
-            print ' done'
+            print(' done')
 
 
 class ConfigEventHandler(BuildEventHandler):
@@ -99,9 +100,9 @@ def serve(config, options=None):
     host, port = config['dev_addr'].split(':', 1)
     server = TCPServer((host, int(port)), DocsDirectoryHandler)
 
-    print 'Running at: http://%s:%s/' % (host, port)
-    print 'Live reload enabled.'
-    print 'Hold ctrl+c to quit.'
+    print('Running at: http://%s:%s/' % (host, port))
+    print('Live reload enabled.')
+    print('Hold ctrl+c to quit.')
     server.serve_forever()
 
     # Clean up
