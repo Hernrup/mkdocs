@@ -3,7 +3,7 @@ from __future__ import print_function
 
 from watchdog import events, observers
 from mkdocs.build import build
-from mkdocs.compat import httpserver, socketserver
+from mkdocs.compat import httpserver, socketserver, urlunquote
 from mkdocs.config import load_config
 import os
 import posixpath
@@ -11,7 +11,6 @@ import shutil
 import sys
 import tempfile
 import time
-import urllib
 
 
 class BuildEventHandler(events.FileSystemEventHandler):
@@ -51,7 +50,7 @@ class FixedDirectoryHandler(httpserver.SimpleHTTPRequestHandler):
         # abandon query parameters
         path = path.split('?', 1)[0]
         path = path.split('#', 1)[0]
-        path = posixpath.normpath(urllib.unquote(path))
+        path = posixpath.normpath(urlunquote(path))
         words = path.split('/')
         words = filter(None, words)
         path = self.base_dir
