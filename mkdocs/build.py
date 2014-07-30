@@ -149,7 +149,7 @@ def build_pages(config):
     for page in site_navigation.walk_pages():
         # Read the input file
         input_path = os.path.join(config['docs_dir'], page.input_path)
-        input_content = open(input_path, 'r').read()
+        input_content = open(input_path, 'r', encoding="utf-8").read()
         if PY2:
             input_content = input_content.decode('utf-8')
 
